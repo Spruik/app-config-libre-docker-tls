@@ -1,0 +1,5 @@
+
+sapp00332.eu.aws.rccad.net {
+    reverse_proxy libre-ui:80
+}
+
