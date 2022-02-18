@@ -32,25 +32,25 @@
     "LIBRE_DQL_URL": "dgraph-dgraph-alpha:9080"
   },
   "pubSubConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "CoreServicePubSubConnector"
   },
   "workflowEventsSubscriberMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "CoreServiceWorkflowEventConnector"
   },
   "workflowCommandsSubscriberMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "CoreServiceWorkflowCommandConnector"
   },
   "edgeConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "CoreServiceEdgeConnector",
@@ -59,7 +59,7 @@
     "EVENT_CATEGORY": "EdgeEvent"
   },
   "cacheConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "CoreServiceCacheConnector",
@@ -96,7 +96,7 @@
   },
   "LibreConnectorMQTT" : {
     "loggerHook": "LibreConnectorMQTT",
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "CoreServiceLibreConnector",

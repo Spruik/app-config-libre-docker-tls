@@ -42,7 +42,7 @@ datasources:
     secureJsonData:
       password: public
     jsonData:
-      host: mqtt
+      host: 10.145.4.40
       port: 1883
       username: admin
     readOnly: false

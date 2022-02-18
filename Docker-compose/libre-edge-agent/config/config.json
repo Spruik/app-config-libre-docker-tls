@@ -25,7 +25,7 @@
     ]
   },
   "PubSubConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "libre-edge-agent-pubsub-gn"
@@ -36,7 +36,7 @@
     "OVERRIDE_ENDPOINTURL": "opc.tcp://127.0.0.1:58018/NodeOPCUA-Server"
   },
   "PlcConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "PlcToEdgeAgent",
@@ -53,7 +53,7 @@
     ]
   },
   "EdgeConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "libre-edge-agent-edgeConnector-gn",
