@@ -114,8 +114,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-      mqtt:
-        condition: service_healthy
+#      mqtt:
+#        condition: service_healthy
       influxdb:
         condition: service_healthy
     container_name: graphql-pubsub
@@ -170,8 +170,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-      mqtt:
-        condition: service_healthy
+#      mqtt:
+#        condition: service_healthy
       influxdb:
         condition: service_healthy
   libre-gateway:
@@ -242,8 +242,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-      mqtt:
-        condition: service_healthy
+#      mqtt:
+#        condition: service_healthy
       influxdb:
         condition: service_healthy
     container_name: libre-edge-agent
