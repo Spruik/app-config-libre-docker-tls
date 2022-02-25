@@ -46,11 +46,11 @@ services:
     environment:
       - AUTH0_DOMAIN=demo-libremfg.us.auth0.com
       - AUTH0_CLIENT_ID=cEye379jRD9TCroW6LRwsNf7LQkMYOBj
-      - GRAPHQL_ENDPOINT=http://localhost:4000/graphql
-      - GRAPHQL_SUBSCRIPTION_ENDPOINT=ws://localhost:8080/graphql
+      - GRAPHQL_ENDPOINT=http://sapp00332.eu.aws.rccad.net:4000/graphql
+      - GRAPHQL_SUBSCRIPTION_ENDPOINT=ws://sapp00332.eu.aws.rccad.net:8080/graphql
       - MQTT_USERNAME=admin
       - MQTT_PASSWORD=public
-      - MQTT_URL=localhost
+      - MQTT_URL=10.145.4.40
       - MQTT_PORT=8000
     depends_on:
       - "influxdb"
