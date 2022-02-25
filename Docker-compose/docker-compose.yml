@@ -9,7 +9,7 @@ version: "3.2"
 
 services:
   zero:
-    image: dgraph/dgraph:latest
+    image: dgraph/dgraph:v21.03.2
     volumes:
       - ./zero/data:/dgraph
     ports:
@@ -19,7 +19,7 @@ services:
     command: dgraph zero --my=zero:5080
     container_name: zero
   alpha:
-    image: dgraph/dgraph:latest
+    image: dgraph/dgraph:v21.03.2
     volumes:
       - ./alpha/data:/dgraph
     ports:
