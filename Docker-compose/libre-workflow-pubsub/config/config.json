@@ -30,7 +30,7 @@
     ]
   },
   "pubSubConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
+    "MQTT_SERVER":   "mqtt://mqtt:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "Workflow-GN"

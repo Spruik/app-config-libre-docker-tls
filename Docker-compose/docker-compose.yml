@@ -50,30 +50,30 @@ services:
       - GRAPHQL_SUBSCRIPTION_ENDPOINT=ws://sapp00332.eu.aws.rccad.net:8080/graphql
       - MQTT_USERNAME=admin
       - MQTT_PASSWORD=public
-      - MQTT_URL=10.145.4.40
-      - MQTT_PORT=8000
+      - MQTT_URL=mqtt
+      - MQTT_PORT=8883
     depends_on:
       - "influxdb"
-#      - "mqtt"
+      - "mqtt"
       - "alpha"
       - "zero"
-#  mqtt:
-#    image:  emqx/emqx:4.3.8
-#    ports:
-#      - 1883:1883
-#      - 8083:8083
-#      - 18083:18083
-#    restart: always
-#    environment:
-#      - EMQX_LOADED_PLUGINS=emqx_recon,emqx_retainer,emqx_management,emqx_dashboard,emqx_auth_mnesia
-#      - EMQX_ALLOW_ANONYMOUS=true
-#      - EMQX_ACL_NOMATCH=allow
-#    container_name: mqtt
-#    healthcheck:
-#      interval: 5s
-#      timeout: 3s
-#      retries: 5
-#      test: ["CMD", "curl", "-f", "http://mqtt:18083"]
+  mqtt:
+    image:  emqx/emqx:4.3.8
+    ports:
+      - 1883:1883
+      - 8083:8083
+      - 18083:18083
+    restart: always
+    environment:
+      - EMQX_LOADED_PLUGINS=emqx_recon,emqx_retainer,emqx_management,emqx_dashboard,emqx_auth_mnesia
+      - EMQX_ALLOW_ANONYMOUS=true
+      - EMQX_ACL_NOMATCH=allow
+    container_name: mqtt
+    healthcheck:
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      test: ["CMD", "curl", "-f", "http://mqtt:18083"]
   libre-core:
     image: ghcr.io/spruik/libre-core:0.5.0
     restart: always
@@ -85,7 +85,7 @@ services:
       - ./libre-core/config:/etc/config
     depends_on:
       - "influxdb"
-#      - "mqtt"
+      - "mqtt"
       - "zero"
       - "dgraph-init"
     container_name: libre-core
@@ -100,7 +100,7 @@ services:
       - ./libre-wms/config:/etc/config
     depends_on:
       - "influxdb"
-#      - "mqtt"
+      - "mqtt"
       - "alpha"
       - "dgraph-init"
     container_name: libre-wms
@@ -114,8 +114,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-#      mqtt:
-#        condition: service_healthy
+      mqtt:
+        condition: service_healthy
       influxdb:
         condition: service_healthy
     container_name: graphql-pubsub
@@ -129,8 +129,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-#      mqtt:
-#        condition: service_healthy
+      mqtt:
+        condition: service_healthy
       influxdb:
         condition: service_healthy
     container_name: libre-workflow-pubsub
@@ -162,7 +162,7 @@ services:
       SITE: PACKML
       AREA: SIM
       LINE: 'LINE01'
-      MQTT_URL: mqtt://10.145.4.40:1883
+      MQTT_URL: mqtt://mqtt:1883
       MQTT_USERNAME: admin
       MQTT_PASSWORD: public
       MQTT_CLIENT_ID: packml_sim
@@ -170,8 +170,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-#      mqtt:
-#        condition: service_healthy
+      mqtt:
+        condition: service_healthy
       influxdb:
         condition: service_healthy
   libre-gateway:
@@ -194,8 +194,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-#      mqtt:
-#        condition: service_healthy
+      mqtt:
+        condition: service_healthy
       influxdb:
         condition: service_healthy
     healthcheck:
@@ -218,7 +218,7 @@ services:
       - ./grafana/data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     depends_on:
-#      - "mqtt"
+      - "mqtt"
       - "alpha"
       - "influxdb"
   dgraph-init:
@@ -242,8 +242,8 @@ services:
     depends_on:
       alpha:
         condition: service_healthy
-#      mqtt:
-#        condition: service_healthy
+      mqtt:
+        condition: service_healthy
       influxdb:
         condition: service_healthy
     container_name: libre-edge-agent
