@@ -9,15 +9,33 @@ version: "3.2"
 
 services:
   traefik:
-    image: "traefik:v2.0"
+    image: "traefik:v2.6"
     command:
-      - --entrypoints.web-secure.address=:443 #Declares the web-secure entrypoint in Traefik
-      - --providers.docker=true
+      - "--entrypoints.gateway.address=:4000" #Declares the web-secure entrypoint in Traefik
+      - "--entrypoints.alpha.address=:8080" #Declares the web-secure entrypoint in Traefik
+      - "--entrypoints.admin.address=:443" #Declares the web-secure entrypoint in Traefik
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.api.address=:4100"
+      - "--providers.docker=true"
+      - "--api=true"
+      - "--log.level=DEBUG"
     ports:
-#      - "80:80"
+      - "4000:4000" # Graphql Gateway port
+      - "8080:8080" # Dgraph API Port
+      - "4100:4100"
       - "443:443" #Docker sends requests on port 443 to Traefik on port 443
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - "traefik.http.routers.api.entrypoints=api"
+      - "traefik.http.routers.api.rule=Host(`sapp00332.eu.aws.rccad.net`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.middlewares.mw-cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST"
+      - "traefik.http.middlewares.mw-cors.headers.accesscontrolalloworiginlist=https://sapp00332.eu.aws.rccad.net"
+      - "traefik.http.middlewares.mw-cors.headers.accesscontrolallowheaders=*"
+      - "traefik.http.middlewares.mw-cors.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.mw-cors.headers.addvaryheader=true"
+
   zero:
     image: dgraph/dgraph:v21.03.2
     volumes:
@@ -29,12 +47,18 @@ services:
     command: dgraph zero --my=zero:5080
     container_name: zero
   alpha:
+    labels:
+      - "traefik.http.routers.alpha.entrypoints=alpha"
+      - "traefik.http.routers.alpha.rule=Host(`sapp00332.eu.aws.rccad.net`)"
+      - "traefik.http.routers.alpha.tls=true"
+      - "traefik.http.services.aplha.loadbalancer.server.port=8080"
+      - "traefik.http.routers.alpha.middlewares=mw-cors"
     image: dgraph/dgraph:v21.03.2
     volumes:
       - ./alpha/data:/dgraph
-    ports:
-      - 8080:8080
-      - 9080:9080
+#    ports:
+#      - 8080:8080
+#      - 9080:9080
 #    env_file:
 #      - ACCESS_KEYS.txt
     restart: on-failure
@@ -52,14 +76,17 @@ services:
     command: dgraph-ratel
   libre-ui:
     labels:
-      - "traefik.http.routers.my-app.rule=Host(`sapp00332.eu.aws.rccad.net`)"
-      - "traefik.http.routers.my-app.tls=true"
+      - "traefik.http.routers.admin.entrypoints=admin"
+      - "traefik.http.routers.admin.rule=Host(`sapp00332.eu.aws.rccad.net`)"
+      - "traefik.http.routers.admin.tls=true"
+      - "traefik.http.services.admin.loadbalancer.server.port=80"
+      - "traefik.http.routers.admin.middlewares=mw-cors"
     container_name: libre-ui
     image:  ghcr.io/spruik/libre-admin-ui:v0.4.0
     environment:
       - AUTH0_DOMAIN=demo-libremfg.us.auth0.com
       - AUTH0_CLIENT_ID=cEye379jRD9TCroW6LRwsNf7LQkMYOBj
-      - GRAPHQL_ENDPOINT=http://sapp00332.eu.aws.rccad.net:4000/graphql
+      - GRAPHQL_ENDPOINT=https://sapp00332.eu.aws.rccad.net:4000/graphql
       - GRAPHQL_SUBSCRIPTION_ENDPOINT=wss://sapp00332.eu.aws.rccad.net:8080/graphql
       - MQTT_USERNAME=admin
       - MQTT_PASSWORD=public
@@ -204,11 +231,17 @@ services:
       influxdb:
         condition: service_healthy
   libre-gateway:
-    ports:
-      - 4000:4000
+#    ports:
+#      - 4000:4000
     image: ghcr.io/spruik/libre-gateway:0.1.1
     restart: always
     container_name: libre-gateway
+    labels:
+      - "traefik.http.routers.libre-gateway.entrypoints=gateway"
+      - "traefik.http.routers.libre-gateway.rule=Host(`sapp00332.eu.aws.rccad.net`)"
+      - "traefik.http.routers.libre-gateway.tls=true"
+      - "traefik.http.services.libre-gateway.loadbalancer.server.port=4000"
+      - "traefik.http.routers.libre-gateway.middlewares=mw-cors"
     environment:
       - GRAPHQL_ENDPOINT=http://alpha:8080
       - LIBRE_CORE_ENDPOINT=http://libre-core:4002
@@ -227,11 +260,6 @@ services:
         condition: service_healthy
       influxdb:
         condition: service_healthy
-    healthcheck:
-      interval: 5s
-      timeout: 3s
-      retries: 5
-      test: ["CMD", "curl", "-f", "http://libre-gateway:4000"]
   grafana:
     image: grafana/grafana:8.2.1
     container_name: grafana
