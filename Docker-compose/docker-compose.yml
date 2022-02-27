@@ -52,6 +52,8 @@ services:
       - MQTT_PASSWORD=public
       - MQTT_URL=mqtt
       - MQTT_PORT=8883
+    ports:
+      - 3000:80
     depends_on:
       - "influxdb"
       - "mqtt"
@@ -217,24 +219,24 @@ services:
       timeout: 3s
       retries: 5
       test: ["CMD", "curl", "-f", "http://libre-gateway:4000"]
-  grafana:
-    image: grafana/grafana:8.2.1
-    container_name: grafana
-    restart: always
-    environment:
-      - GF_INSTALL_PLUGINS=fifemon-graphql-datasource,marcusolsson-gantt-panel,isaozler-paretochart-panel,michaeldmoore-multistat-panel
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/plugins:/var/lib/grafana/plugins
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
-      - ./grafana/data:/var/lib/grafana
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-    depends_on:
-      - "mqtt"
-      - "alpha"
-      - "influxdb"
+#  grafana:
+#    image: grafana/grafana:8.2.1
+#    container_name: grafana
+#    restart: always
+#    environment:
+#      - GF_INSTALL_PLUGINS=fifemon-graphql-datasource,marcusolsson-gantt-panel,isaozler-paretochart-panel,michaeldmoore-multistat-panel
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - ./grafana/provisioning:/etc/grafana/provisioning
+#      - ./grafana/plugins:/var/lib/grafana/plugins
+#      - ./grafana/dashboards:/var/lib/grafana/dashboards
+#      - ./grafana/data:/var/lib/grafana
+#      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+#    depends_on:
+#      - "mqtt"
+#      - "alpha"
+#      - "influxdb"
   dgraph-init:
     image: dgraph/dgraph:v21.12.0
     volumes:
@@ -261,46 +263,46 @@ services:
       influxdb:
         condition: service_healthy
     container_name: libre-edge-agent
-  appsmith:
-    image: appsmith/appsmith-ce:v1.6.6
-    container_name: appsmith-ce
-    environment:
-      - APPSMITH_MAIL_ENABLED=true
-      - APPSMITH_MAIL_FROM=app@libremfg.ai
-      - APPSMITH_REPLY_TO=app@libremfg.ai
-      - APPSMITH_MAIL_HOST=smtp.sendgrid.net
-      - APPSMITH_MAIL_PORT=587
-      - APPSMITH_MAIL_SMTP_TLS_ENABLED=true
-      - APPSMITH_MAIL_USERNAME=apikey
-      - APPSMITH_MAIL_PASSWORD=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
-      - APPSMITH_MAIL_SMTP_AUTH=true
-      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_GOOGLE_ISSUER-URI=https://demo-libremfg.us.auth0.com/
-      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_GOOGLE_USER-NAME-ATTRIBUTE=email
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT-ID=cEye379jRD9TCroW6LRwsNf7LQkMYOBj
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT-SECRET=1QR-caDuhi-UcM0YzgKcip4wIdiTZrljH8K3h8WOHe_Zqg34Vi-7q3V0E6P-0JA0
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_AUTHORIZATION-GRANT-TYPE=authorization_code
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_REDIRECT-URI={baseUrl}/login/oauth2/code/{registrationId}
-    ports:
-      - "3080:80"
-      - "9443:443"
-      - "9001:9001"
-    volumes:
-      - ./stacks:/appsmith-stacks
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
-  auto_update:
-    image: containrrr/watchtower:latest-dev
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    # Update check interval in seconds.
-    command: --interval 300 --label-enable --cleanup
-  caddy:
-    image: caddy:2.0.0-alpine
-    ports:
-      - 443:443
-    volumes:
-      - caddy:/data
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+#  appsmith:
+#    image: appsmith/appsmith-ce:v1.6.6
+#    container_name: appsmith-ce
+#    environment:
+#      - APPSMITH_MAIL_ENABLED=true
+#      - APPSMITH_MAIL_FROM=app@libremfg.ai
+#      - APPSMITH_REPLY_TO=app@libremfg.ai
+#      - APPSMITH_MAIL_HOST=smtp.sendgrid.net
+#      - APPSMITH_MAIL_PORT=587
+#      - APPSMITH_MAIL_SMTP_TLS_ENABLED=true
+#      - APPSMITH_MAIL_USERNAME=apikey
+#      - APPSMITH_MAIL_PASSWORD=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
+#      - APPSMITH_MAIL_SMTP_AUTH=true
+#      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_GOOGLE_ISSUER-URI=https://demo-libremfg.us.auth0.com/
+#      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_GOOGLE_USER-NAME-ATTRIBUTE=email
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT-ID=cEye379jRD9TCroW6LRwsNf7LQkMYOBj
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT-SECRET=1QR-caDuhi-UcM0YzgKcip4wIdiTZrljH8K3h8WOHe_Zqg34Vi-7q3V0E6P-0JA0
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_AUTHORIZATION-GRANT-TYPE=authorization_code
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_REDIRECT-URI={baseUrl}/login/oauth2/code/{registrationId}
+#    ports:
+#      - "3080:80"
+#      - "9443:443"
+#      - "9001:9001"
+#    volumes:
+#      - ./stacks:/appsmith-stacks
+#    labels:
+#      com.centurylinklabs.watchtower.enable: "true"
+#  auto_update:
+#    image: containrrr/watchtower:latest-dev
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    # Update check interval in seconds.
+#    command: --interval 300 --label-enable --cleanup
+#  caddy:
+#    image: caddy:2.0.0-alpine
+#    ports:
+#      - 443:443
+#    volumes:
+#      - caddy:/data
+#      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   caddy:
