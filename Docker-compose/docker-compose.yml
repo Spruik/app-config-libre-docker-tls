@@ -16,12 +16,14 @@ services:
       - "--entrypoints.admin.address=:443" #Declares the web-secure entrypoint in Traefik
       - "--entrypoints.web.address=:80"
       - "--entrypoints.api.address=:4100"
+      - "--entrypoints.wss.address=:8084"
       - "--providers.docker=true"
       - "--api=true"
       - "--log.level=DEBUG"
     ports:
       - "4000:4000" # Graphql Gateway port
       - "8080:8080" # Dgraph API Port
+      - "8084:8084" # MQTT wss port
       - "4100:4100"
       - "443:443" #Docker sends requests on port 443 to Traefik on port 443
     volumes:
@@ -90,8 +92,8 @@ services:
       - GRAPHQL_SUBSCRIPTION_ENDPOINT=wss://sapp00332.eu.aws.rccad.net:8080/graphql
       - MQTT_USERNAME=admin
       - MQTT_PASSWORD=public
-      - MQTT_URL=mqtt
-      - MQTT_PORT=8883
+      - MQTT_URL=sapp00332.eu.aws.rccad.net
+      - MQTT_PORT=8084
 #    ports:
 #      - 80:80
     depends_on:
@@ -101,6 +103,12 @@ services:
       - "zero"
   mqtt:
     image:  emqx/emqx:4.3.8
+    labels:
+      - "traefik.http.routers.mqtts.entrypoints=wss"
+      - "traefik.http.routers.mqtts.rule=Host(`sapp00332.eu.aws.rccad.net`)"
+      - "traefik.http.routers.mqtts.tls=true"
+      - "traefik.http.services.mqtts.loadbalancer.server.port=8083"
+      - "traefik.http.routers.mqtts.middlewares=mw-cors"
     ports:
       - 1883:1883
       - 8083:8083
