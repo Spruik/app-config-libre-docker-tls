@@ -256,7 +256,7 @@ services:
   libre-gateway:
 #    ports:
 #      - 4000:4000
-    image: ghcr.io/spruik/libre-gateway:0.1.1
+    image: ghcr.io/spruik/libre-gateway:0.4.0
     restart: always
     container_name: libre-gateway
     labels:
@@ -269,7 +269,12 @@ services:
     environment:
       - GRAPHQL_ENDPOINT=http://alpha:8080
       - LIBRE_CORE_ENDPOINT=http://libre-core:4002
+#      - LIBRE_SCHEDULER_ENDPOINT=http://libre-scheduler:10001
+#      - LIBRE_WMS_ENDPOINT=http://libre-wms:7001
       - LIBRE_AUTH_CERT_URL=https://demo-libremfg.us.auth0.com/.well-known/jwks.json
+      - AUTH_GATEWAY=false
+      - PROXY_AUTH_GATEWAY=false
+      - PROXY_ADDRESS=http://zproxy-euc1.eu.aws.rccad.net:80/
     volumes:
       - type: bind
         source: ./libre-gateway/supergraph.graphql
