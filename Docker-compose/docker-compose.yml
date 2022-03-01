@@ -272,9 +272,9 @@ services:
 #      - LIBRE_SCHEDULER_ENDPOINT=http://libre-scheduler:10001
 #      - LIBRE_WMS_ENDPOINT=http://libre-wms:7001
       - LIBRE_AUTH_CERT_URL=https://demo-libremfg.us.auth0.com/.well-known/jwks.json
-      - AUTH_GATEWAY=false
-      - PROXY_AUTH_GATEWAY=true
-      - PROXY_ADDRESS=http://zproxy-euc1.eu.aws.rccad.net:80/
+#      - AUTH_GATEWAY="false"
+#      - PROXY_AUTH_GATEWAY="false"
+#      - PROXY_ADDRESS=http://zproxy-euc1.eu.aws.rccad.net:80/
     volumes:
       - type: bind
         source: ./libre-gateway/supergraph.graphql
