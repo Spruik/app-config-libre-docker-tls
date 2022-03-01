@@ -1,5 +1,0 @@
-
-10.145.4.40 {
-    reverse_proxy libre-ui:80
-}
-
