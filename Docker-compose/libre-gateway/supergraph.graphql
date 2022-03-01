@@ -6262,9 +6262,9 @@ scalar join__FieldSet
 
 enum join__Graph {
   CORE @join__graph(name: "core" url: "http://libre-core:4002/query")
-  SCHEDULER @join__graph(name: "scheduler" url: "http://sapp00332.eu.aws.rccad.net:10001/query")
-  SCHEMA @join__graph(name: "schema" url: "http://sapp00332.eu.aws.rccad.net:8080/graphql")
-  WMS @join__graph(name: "wms" url: "http://sapp00332.eu.aws.rccad.net:7001/query")
+  SCHEDULER @join__graph(name: "scheduler" url: "http://libre-scheduler:10001/query")
+  SCHEMA @join__graph(name: "schema" url: "http://alpha:8080/graphql")
+  WMS @join__graph(name: "wms" url: "http://libre-wms:7001/query")
 }
 
 type Kpi {
