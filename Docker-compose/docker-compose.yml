@@ -65,7 +65,7 @@ services:
     volumes:
       - ./alpha/data:/dgraph
     ports:
-#      - 8080:8080
+      - 8081:8080
       - 9080:9080
 #    env_file:
 #      - ACCESS_KEYS.txt
@@ -149,8 +149,8 @@ services:
   libre-core:
     image: ghcr.io/spruik/libre-core:0.5.0
     restart: always
-#    ports:
-#      - 4002:4002
+    ports:
+      - 4002:4002
     environment:
       - LIBRE_CONFIG_FILE=/etc/config/config.json
     volumes:
@@ -256,7 +256,7 @@ services:
   libre-gateway:
 #    ports:
 #      - 4000:4000
-    image: ghcr.io/spruik/libre-gateway:0.4.0
+    image: ghcr.io/spruik/libre-gateway:latest
     restart: always
     container_name: libre-gateway
     labels:
@@ -273,7 +273,7 @@ services:
 #      - LIBRE_WMS_ENDPOINT=http://libre-wms:7001
       - LIBRE_AUTH_CERT_URL=https://demo-libremfg.us.auth0.com/.well-known/jwks.json
       - AUTH_GATEWAY=false
-      - PROXY_AUTH_GATEWAY=false
+      - PROXY_AUTH_GATEWAY=true
       - PROXY_ADDRESS=http://zproxy-euc1.eu.aws.rccad.net:80/
     volumes:
       - type: bind

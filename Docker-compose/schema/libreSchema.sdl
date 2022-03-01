@@ -1019,6 +1019,7 @@ type Equipment @withSubscription @key(fields:"id") {
     shipments:[Shipment] @hasInverse(field:warehouse)
     shipmentItems:[ShipmentItem] @hasInverse(field:bin)
     orders:[Order] @hasInverse(field:warehouse)
+    stagedOrders: [Order] @hasInverse(field:site)
     events:[EventLog] @hasInverse(field:equipment)
     quantities:[QuantityLog] @hasInverse(field:equipment)
     allowAdhocWorklog:Boolean
@@ -1971,6 +1972,7 @@ type Order  @key(fields:"id"){
     invoiceFromPartner:Partner
     invoiceToPartner:Partner
     warehouse:Equipment @hasInverse(field:orders)
+    site:Equipment @hasInverse(field:stagedOrders)
     lines:[OrderLine] @hasInverse(field:order)
     shipments:[Shipment] @hasInverse(field:order)
     notes:String
