@@ -1,0 +1,73 @@
+{
+  "libreLogger" : {
+    "defaultLevel": "DEBUG",
+    "defaultDestination": "CONSOLE",
+    "loggers": [
+      {"MAIN": {"topic":"MAIN"}},
+      {"server": {"topic":"SERVER"}},
+      {"Influxdb" : {"topic": "Influxdb", "level": "DEBUG"}},
+      {"edgeConnectorMQTT" : {"topic": "EDGE_CON", "level": "DEBUG"}},
+      {"edgeClient": {"topic":"EDGE_CLI", "level": "DEBUG"}},
+      {"PubSubMQTT" : {"topic": "PubSubMQTT"}},
+      {"PlcConnectorMQTT" : {"topic": "PLCMQTT"}},
+      {"graphQLTrans" : {"topic": "GQLTRANS"}},
+      {"DATAGQL": {"topic":"DATAGQL"}},
+      {"EQFINDR": {"topic":"EQFINDR"}},
+      {"EQCACHE": {"topic":"EQCACHE"}},
+      {"calendarService": {"topic": "CALENDAR", "level": "DEBUG"}},
+      {"ConfigSubscriber": {"topic":"CONFIG_SUB", "level": "DEBUG"}},
+      {"EdgeSubscriber": {"topic":"EDGE_SUB", "level": "DEBUG"}},
+      {"EquipmentHandler": {"topic":"EQHDLR", "level": "DEBUG"}},
+      {"PublishToHistorianHandler": {"topic":"PHHDLR", "level": "DEBUG"}},
+      {"libreCore": {"topic":"CORE", "level": "DEBUG"}},
+      {"HistorianHandler": {"topic":"Historian", "level": "DEBUG"}},
+      {"OperationsRequestStartHandler": {"topic":"OpsReqStartHdlr", "level": "DEBUG"}},
+      {"OperationsRequestCreateHandler": {"topic":"OpsReqCreateHdlr", "level": "DEBUG"}},
+      {"JobOrderStateChangeHandler": {"topic":"JobOrdSCHdlr", "level": "DEBUG"}},
+      {"JobOrderTransitionHandler": {"topic":"JobOrdTransHdlr", "level": "DEBUG"}},
+      {"RulesetHandler": {"topic":"RulesetHdlr", "level": "DEBUG"}},
+      {"cacheConnectorMQTT": {"topic":"cacheConnMQTT", "level": "DEBUG"}},
+      {"TagValueSubscriber": {"topic":"TagSubscribe", "level": "DEBUG"}},
+      {"": {"topic":"BLANK", "level": "DEBUG"}},
+      {"DEFAULT": {"topic":"DEFAULT", "level": "DEBUG"}},
+      {"QuantityLogEventHandler": {"TOPIC": "QUANTITYLOG", "level":"DEBUG"}},
+      {"OperationsRequestHandler": {"topic": "OPRQHNDLR", "level": "DEBUG"}},
+      {"MachineStateHandler": {"topic": "EVENTLOG", "level": "DEBUG"}}
+    ]
+  },
+  "libreDataStoreGraphQL" : {
+    "GRAPHQL_URL": "http://alpha:8080/graphql"
+  },
+  "solaceConnectorMQTT" : {
+    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
+    "MQTT_USER":     "admin",
+    "MQTT_PWD":      "public",
+    "MQTT_SVC_NAME": "RichemontExtServiceSolaceConnector"
+  },
+  "pubSubConnectorMQTT" : {
+    "MQTT_SERVER":   "mqtt://mqtt:1883",
+    "MQTT_USER":     "admin",
+    "MQTT_PWD":      "public",
+    "MQTT_SVC_NAME": "RichemontExtPubSubConnector"
+  },
+  "GraphQLSubscriber": {
+    "GRAPHQL_URL": "http://alpha:8080/graphql"
+  },
+  "influxdb" : {
+    "loggerHook" : "Influxdb",
+    "serverURL" : "http://influxdb:8086",
+    "authToken" : "mytokenmytokenmytoken",
+    "org" : "Libre",
+    "bucket" : "Micro5"
+  },
+  "equipmentCache" : {
+    "MonitorChanges" : true
+  },
+  "RESTAPI": {
+    "PORT" : "4003"
+  },
+  "RichemontExtService": {
+    "SOLACE_BRIDGE_SOURCE_TOPIC": "Source/#",
+    "MICRO5_TOPIC": "Source/Micro5/Buffer"
+  }
+}

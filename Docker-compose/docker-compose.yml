@@ -44,7 +44,7 @@ services:
       - "traefik.http.middlewares.mw-cors.headers.addvaryheader=true"
 
   zero:
-    image: dgraph/dgraph:v21.03.2
+    image: ghcr.io/spruik/dgraph:v21.03.3
     volumes:
       - ./zero/data:/dgraph
     ports:
@@ -61,7 +61,7 @@ services:
       - "traefik.http.services.aplha.loadbalancer.server.port=8080"
       - "traefik.http.routers.alpha.middlewares=mw-cors"
       - "traefik.http.routers.alpha.tls.certresolver=le"
-    image: dgraph/dgraph:v21.03.2
+    image: ghcr.io/spruik/dgraph:v21.03.3
     volumes:
       - ./alpha/data:/dgraph
     ports:
@@ -91,7 +91,7 @@ services:
       - "traefik.http.routers.admin.middlewares=mw-cors"
       - "traefik.http.routers.admin.tls.certresolver=le"
     container_name: libre-ui
-    image:  ghcr.io/spruik/libre-admin-ui:v0.4.0
+    image:  ghcr.io/spruik/libre-admin-ui:v0.5.3
     environment:
       - AUTH0_DOMAIN=demo-libremfg.us.auth0.com
       - AUTH0_CLIENT_ID=cEye379jRD9TCroW6LRwsNf7LQkMYOBj
@@ -319,7 +319,7 @@ services:
       alpha:
           condition: service_healthy
   libre-edge-agent:
-    image: ghcr.io/spruik/libre-edge-agent:0.4.0
+    image: ghcr.io/spruik/libre-edge-agent:0.5.0
     restart: always
     environment:
       - LIBRE_CONFIG_FILE=/etc/config/config.json
@@ -333,5 +333,19 @@ services:
       influxdb:
         condition: service_healthy
     container_name: libre-edge-agent
-
+  richemont-ext:
+    image: ghcr.io/spruik/richemont-ext:0.0.1
+    restart: always
+    environment:
+      - LIBRE_CONFIG_FILE=/etc/config/config.json
+    volumes:
+      - ./richemont-ext/config:/etc/config
+    depends_on:
+      alpha:
+        condition: service_healthy
+      mqtt:
+        condition: service_healthy
+      influxdb:
+        condition: service_healthy
+    container_name: richemont-ext
 
