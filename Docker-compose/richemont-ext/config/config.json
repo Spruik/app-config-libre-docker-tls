@@ -39,7 +39,7 @@
     "GRAPHQL_URL": "http://alpha:8080/graphql"
   },
   "solaceConnectorMQTT" : {
-    "MQTT_SERVER":   "mqtt://10.145.4.40:1883",
+    "MQTT_SERVER":   "mqtt://schbutbaa008.ch.rccad.net:1883",
     "MQTT_USER":     "admin",
     "MQTT_PWD":      "public",
     "MQTT_SVC_NAME": "RichemontExtServiceSolaceConnector"
@@ -67,7 +67,7 @@
     "PORT" : "4003"
   },
   "RichemontExtService": {
-    "SOLACE_BRIDGE_SOURCE_TOPIC": "Source/#",
+    "SOLACE_BRIDGE_SOURCE_TOPIC": "spJson/#",
     "MICRO5_TOPIC": "Source/Micro5/Buffer"
   }
 }
