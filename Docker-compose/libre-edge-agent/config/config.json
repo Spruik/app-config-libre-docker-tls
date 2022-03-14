@@ -21,7 +21,7 @@
       {"EQCACHE": {"topic":"EQCACHE"}},
       {"EdgeService": {"topic":"EdgeService"}},
       {"valueChangeFilterFactory": {"topic":"ValChng"}},
-      {"": {"topic":"DEFAULT", "level": "INFO"}}
+      {"": {"topic":"DEFAULT", "level": "DEBUG"}}
     ]
   },
   "PubSubConnectorMQTT" : {
