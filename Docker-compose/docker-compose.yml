@@ -319,7 +319,7 @@ services:
       alpha:
           condition: service_healthy
   libre-edge-agent:
-    image: ghcr.io/spruik/libre-edge-agent:0.5.0
+    image: ghcr.io/spruik/libre-edge-agent:0.5.1
     restart: always
     environment:
       - LIBRE_CONFIG_FILE=/etc/config/config.json
